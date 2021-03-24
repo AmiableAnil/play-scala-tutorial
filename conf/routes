@@ -1,0 +1,76 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# https://www.playframework.com/documentation/2.8.x/ScalaRouting
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                                   controllers.HomeController.index()
+GET     /explore                            controllers.HomeController.explore()
+GET     /tutorial                           controllers.HomeController.tutorial()
+GET     /test                               controllers.HomeController.test()
+
+# ActionController
+GET     /echo                               controllers.ActionController.echo()
+GET     /action/index                       controllers.ActionController.index()
+
+#BodyParserController
+GET     /save                               controllers.BodyParserController.save()
+
+# HomeController
+GET     /user                              controllers.HomeController.user(id: Long = 66666)
+# GET     /user                              controllers.HomeController.user(id: Long ?= 66666)
+# GET     /user                              controllers.HomeController.user(id: Long)
+
+# http://localhost:9000/user/
+GET     /user/                              controllers.HomeController.user(id: Long = 432344)
+
+# Extract the id parameter from the path.
+# http://localhost:9000/user/6666
+GET     /user/:id                           controllers.HomeController.user(id: Long)
+
+# http://localhost:9000/get-user - optional query param with default value
+GET     /get-user                           controllers.HomeController.user(id: Long ?= 321313)
+
+# Extract the id parameter from the query string.
+# http://localhost:9000/get-user?id=323123 - mandatory query param
+GET     /get-user                           controllers.HomeController.user(id: Long)
+
+# The version parameter is optional. E.g. /api/list?version=3.0
+GET     /api/list                           controllers.HomeController.list(version: Option[String])
+
+# Hello action
+GET     /hello                              controllers.HomeController.helloBob()
+GET     /hello/:name                        controllers.HomeController.hello(name)
+
+# http://localhost:9000/assets/images/header-pattern.png
+# http://localhost:9000/assets/javascripts/prism.js
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                       controllers.Assets.versioned(path="/public", file: Asset)
+# GET     /files/*name                controllers.Application.download(name)
+
+# Default Controller
+# Redirects to https://www.playframework.com/ with 303 See Other
+GET     /about                                controllers.Default.redirect(to = "https://www.playframework.com/")
+
+# Responds with 404 Not Found
+GET     /orders                               controllers.Default.notFound
+
+# Responds with 500 Internal Server Error
+GET     /clients                              controllers.Default.error
+
+# Responds with 501 Not Implemented
+GET     /posts                                controllers.Default.todo
+
+
+GET     /:contentType                         controllers.ManipulatingResultController.contentType(contentType)
+GET     /headers                              controllers.ManipulatingResultController.headers()
+
+
+GET     /api/get                              controllers.RestApiController.getApi()
+
+GET     /record/all                           controllers.Neo4JController.listAllRecord()
+POST    /record/insert                        controllers.Neo4JController.insertRecord()
+GET     /record/get                           controllers.Neo4JController.getRecord(name: String)
+GET     /record/delete                        controllers.Neo4JController.deleteRecord(name: String)
+PATCH   /record/update                        controllers.Neo4JController.updateRecord()
